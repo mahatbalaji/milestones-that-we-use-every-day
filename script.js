@@ -75,6 +75,7 @@ let currentAgeGroup = '';
 let selectedTopic = '';
 let currentOutline = '';
 let currentWriting = '';
+let isInitialRecommendations = true;
 
 // Event Listeners
 ageGroupSelect.addEventListener('change', (e) => {
@@ -83,7 +84,7 @@ ageGroupSelect.addEventListener('change', (e) => {
 });
 
 getRecommendationsBtn.addEventListener('click', displayRecommendations);
-rerollBtn.addEventListener('click', displayRecommendations);
+rerollBtn.addEventListener('click', generateMoreRecommendations);
 proceedToWriteBtn.addEventListener('click', generateWriting);
 proceedToPolishBtn.addEventListener('click', generatePolish);
 downloadBtn.addEventListener('click', downloadArticle);
@@ -118,6 +119,64 @@ function displayRecommendations() {
     });
 
     recommendationsBox.style.display = 'block';
+}
+
+// Function to generate more recommendations from LLM
+async function generateMoreRecommendations() {
+    rerollBtn.disabled = true;
+    rerollBtn.innerHTML = '⏳ Generating new ideas...';
+
+    try {
+        const ageRange = currentAgeGroup.split('-');
+        const prompt = `You are an educational content expert. Generate 5 creative, age-appropriate milestone topics (how things are made or how processes work) for ${ageRange[0]}-${ageRange[1]} year-old students.
+
+The topics should be:
+- Interesting and engaging for this age group
+- Educational and appropriate for their learning level
+- Different from typical school topics (be creative!)
+- Formatted as simple questions like "How are X made?" or "How does X work?"
+
+Return ONLY the 5 topics, one per line, without numbering or extra text. For example:
+How are video games created?
+How is renewable energy generated?`;
+
+        const result = await callAPI(prompt);
+        
+        // Parse the response into individual topics
+        const newTopics = result
+            .split('\n')
+            .map(topic => topic.trim())
+            .filter(topic => topic.length > 0)
+            .slice(0, 5); // Ensure we only get 5 topics
+
+        // Clear and display new topics
+        recommendationsList.innerHTML = '';
+        
+        newTopics.forEach((topic) => {
+            const div = document.createElement('div');
+            div.className = 'recommendation-item';
+            div.innerHTML = `
+                <div class="recommendation-item-text">
+                    <strong>${topic}</strong>
+                    <small>Click to learn more about this milestone</small>
+                </div>
+                <span class="arrow">→</span>
+            `;
+            div.addEventListener('click', () => selectMilestone(topic));
+            recommendationsList.appendChild(div);
+        });
+
+        rerollBtn.disabled = false;
+        rerollBtn.innerHTML = '🔄 Get More Recommendations';
+    } catch (error) {
+        console.error('Error generating recommendations:', error);
+        rerollBtn.disabled = false;
+        rerollBtn.innerHTML = '🔄 Get More Recommendations';
+        rerollBtn.textContent = '❌ Error - Try Again';
+        setTimeout(() => {
+            rerollBtn.innerHTML = '🔄 Get More Recommendations';
+        }, 3000);
+    }
 }
 
 // Function to select a milestone and proceed to stage 2
@@ -282,6 +341,7 @@ function startOver() {
     selectedTopic = '';
     currentOutline = '';
     currentWriting = '';
+    isInitialRecommendations = true;
 
     // Reset form
     ageGroupSelect.value = '';
