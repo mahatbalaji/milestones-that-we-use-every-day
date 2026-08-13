@@ -56,6 +56,7 @@ const proceedToWriteBtn = document.getElementById('proceedToWriteBtn');
 const proceedToPolishBtn = document.getElementById('proceedToPolishBtn');
 const downloadBtn = document.getElementById('downloadBtn');
 const startOverBtn = document.getElementById('startOverBtn');
+const rerollBtn = document.getElementById('rerollBtn');
 
 const outlineLoading = document.getElementById('outlineLoading');
 const outlineDisplay = document.getElementById('outlineDisplay');
@@ -82,14 +83,24 @@ ageGroupSelect.addEventListener('change', (e) => {
 });
 
 getRecommendationsBtn.addEventListener('click', displayRecommendations);
+rerollBtn.addEventListener('click', displayRecommendations);
 proceedToWriteBtn.addEventListener('click', generateWriting);
 proceedToPolishBtn.addEventListener('click', generatePolish);
 downloadBtn.addEventListener('click', downloadArticle);
 startOverBtn.addEventListener('click', startOver);
 
+// Utility function to shuffle an array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 // Function to display recommendations
 function displayRecommendations() {
-    const topics = topicsByAge[currentAgeGroup];
+    const topics = [...topicsByAge[currentAgeGroup]]; // Create a copy
+    shuffleArray(topics); // Shuffle the topics for variety
     recommendationsList.innerHTML = '';
 
     topics.forEach((topic) => {
