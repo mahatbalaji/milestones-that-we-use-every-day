@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stones That Go For Miles - Everyday Milestones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🪨 Stones That Go For Miles</h1>
+            <p>Discover how everyday items are made!</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Stage 1: Agent 1 - Recommendations -->
+            <section id="stage1" class="stage active">
+                <div class="stage-header">
+                    <h2>Stage 1: Find Your Milestone</h2>
+                    <p class="stage-subtitle">Agent 1 is finding amazing topics for you...</p>
+                </div>
+                
+                <div class="input-section">
+                    <label for="ageGroup">Select Your Age Group:</label>
+                    <select id="ageGroup" class="input-select">
+                        <option value="">-- Choose an age group --</option>
+                        <option value="8-10">8-10 years old</option>
+                        <option value="11-13">11-13 years old</option>
+                        <option value="14-16">14-16 years old</option>
+                        <option value="17-18">17-18 years old</option>
+                    </select>
+                </div>
+
+                <button id="getRecommendationsBtn" class="btn btn-primary" disabled>
+                    Get Milestone Recommendations
+                </button>
+
+                <div id="recommendations" class="recommendations-box" style="display: none;">
+                    <h3>Recommended Topics:</h3>
+                    <div id="recommendationsList" class="recommendations-list"></div>
+                </div>
+            </section>
+
+            <!-- Stage 2: Agent 2 - Outline -->
+            <section id="stage2" class="stage" style="display: none;">
+                <div class="stage-header">
+                    <h2>Stage 2: Create Outline</h2>
+                    <p class="stage-subtitle">Agent 2 is creating an outline...</p>
+                </div>
+
+                <div class="selection-box">
+                    <p><strong>You selected:</strong> <span id="selectedMilestone"></span></p>
+                </div>
+
+                <div id="outlineLoading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Agent 2 is creating your outline...</p>
+                </div>
+
+                <div id="outlineDisplay" class="outline-box" style="display: none;">
+                    <h3>Content Outline:</h3>
+                    <div id="outlineContent"></div>
+                    <button id="proceedToWriteBtn" class="btn btn-primary">Proceed to Writing</button>
+                </div>
+            </section>
+
+            <!-- Stage 3: Agent 3 - Writing -->
+            <section id="stage3" class="stage" style="display: none;">
+                <div class="stage-header">
+                    <h2>Stage 3: Write Content</h2>
+                    <p class="stage-subtitle">Agent 3 is writing your article...</p>
+                </div>
+
+                <div id="writingLoading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Agent 3 is writing the article...</p>
+                </div>
+
+                <div id="writingDisplay" class="writing-box" style="display: none;">
+                    <h3>Article Draft:</h3>
+                    <div id="writingContent" class="article-content"></div>
+                    <button id="proceedToPolishBtn" class="btn btn-primary">Proceed to Polish</button>
+                </div>
+            </section>
+
+            <!-- Stage 4: Agent 4 - Polish -->
+            <section id="stage4" class="stage" style="display: none;">
+                <div class="stage-header">
+                    <h2>Stage 4: Polish Content</h2>
+                    <p class="stage-subtitle">Agent 4 is perfecting your article...</p>
+                </div>
+
+                <div id="polishLoading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Agent 4 is polishing the article...</p>
+                </div>
+
+                <div id="polishDisplay" class="polish-box" style="display: none;">
+                    <h3>Final Article:</h3>
+                    <div id="polishContent" class="article-content"></div>
+                    <div class="action-buttons">
+                        <button id="downloadBtn" class="btn btn-success">📥 Download Article</button>
+                        <button id="startOverBtn" class="btn btn-secondary">🔄 Start Over</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Learn about the milestones in everyday life! © 2026</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
